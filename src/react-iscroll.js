@@ -24,14 +24,6 @@ for(var i = 0; i < availableEvents.length; i++) {
   propTypes[availableEvents[1]] = React.PropTypes.func
 }
 
-// Default wrapper style
-var scrollerStyle = {
-  position: "relative",
-  height: "100%",
-  width: "100%",
-  overflow: "hidden"
-}
-
 var ReactIScroll = React.createClass({
   displayName: 'ReactIScroll',
 
@@ -39,7 +31,13 @@ var ReactIScroll = React.createClass({
 
   getDefaultProps: function() {
     return {
-      options: {}
+      options: {},
+      style: {
+        position: "relative",
+        height: "100%",
+        width: "100%",
+        overflow: "hidden"
+      }
     }
   },
 
@@ -155,9 +153,8 @@ var ReactIScroll = React.createClass({
     }
   },
 
-  // TODO allow change className and styles
   render: function() {
-    return React.createElement("div", {style: scrollerStyle},
+    return React.createElement("div", {className: this.props.className, style: this.props.style},
              React.createElement("div", null, this.props.children)
            )
   }
