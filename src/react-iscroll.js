@@ -1,6 +1,5 @@
 var React        = require('react'),
-    _            = require('lodash'),
-    iScroll      = require('iscroll/build/iscroll-zoom'),
+    iScroll      = require('iscroll'),
     shallowEqual = require('react/lib/shallowEqual');
 
 // Events available on iScroll instance
