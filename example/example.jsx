@@ -1,6 +1,7 @@
 require('./example.css')
 var React = require('react')
 var ReactIScroll = require('../index.js')
+var IScroll = require('iscroll')
 
 var iScrollOptions = {
   mouseWheel: true,
@@ -8,7 +9,6 @@ var iScrollOptions = {
 }
 
 var Example = React.createClass({
-
   getInitialState: function() {
     var list = [], i = 0, len = 30;
 
@@ -70,7 +70,7 @@ var Example = React.createClass({
           React IScroll component example
         </div>
         <div id="wrapper">
-          <ReactIScroll ref="scroll"
+          <ReactIScroll iscroll={IScroll}
                         options={iScrollOptions}
                         onRefresh={this.onScrollRefresh}
                         onScrollStart={this.onScrollStart}

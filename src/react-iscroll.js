@@ -1,5 +1,4 @@
 var React        = require('react'),
-    iScroll      = require('iscroll'),
     shallowEqual = require('react/lib/shallowEqual');
 
 // Events available on iScroll instance
@@ -17,7 +16,23 @@ var availableEvents = [
 
 // Generate propTypes with event function validating
 var propTypes = {
-  options: React.PropTypes.object
+  options: React.PropTypes.object,
+  iscroll: function(props, propName, componentName) {
+    var iscroll = props[propName],
+        proto   = iscroll && iscroll.prototype;
+
+    if(!iscroll || !proto || !proto.version || !proto.scrollTo) {
+      return new Error(componentName + ": iscroll not passed to component props.")
+    } else {
+      if(!/^5\..*/.test(proto.version)) {
+        console.warn(componentName + ": different version than 5.x.y of iscroll is loaded.")
+      }
+
+      if(props.options && props.options.zoom && !proto.zoom) {
+        console.warn(componentName + ": options.zoom is true, but iscroll-zoom version is not loaded.")
+      }
+    }
+  }
 }
 
 for(var i = 0; i < availableEvents.length; i++) {
@@ -94,7 +109,7 @@ var ReactIScroll = React.createClass({
 
   _initializeIScroll: function() {
     // Create iScroll instance with given options
-    this._iScrollInstance = new iScroll(this.getDOMNode(), this.props.options)
+    this._iScrollInstance = new this.props.iscroll(this.getDOMNode(), this.props.options)
 
     // Bind iScroll events
     this._bindIScrollEvents()
