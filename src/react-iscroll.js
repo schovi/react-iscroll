@@ -1,9 +1,11 @@
 var React        = require('react'),
-    shallowEqual = require('react/lib/shallowEqual');
+    shallowEqual = require('react/lib/shallowEqual'),
+    availableEvents,
+    propTypes;
 
 // Events available on iScroll instance
 // [`iscroll event name`, `react component event name`]
-var availableEvents = [
+availableEvents = [
   ['beforeScrollStart', "onBeforeScrollStart"],
   ['scrollCancel', "onScrollCancel"],
   ['scrollStart', "onScrollStart"],
@@ -15,7 +17,7 @@ var availableEvents = [
 ]
 
 // Generate propTypes with event function validating
-var propTypes = {
+propTypes = {
   options: React.PropTypes.object,
   iscroll: function(props, propName, componentName) {
     var iscroll = props[propName],
@@ -36,7 +38,7 @@ var propTypes = {
 }
 
 for(var i = 0; i < availableEvents.length; i++) {
-  propTypes[availableEvents[1]] = React.PropTypes.func
+  propTypes[availableEvents[i]] = React.PropTypes.func
 }
 
 var ReactIScroll = React.createClass({
@@ -73,7 +75,7 @@ var ReactIScroll = React.createClass({
   // Check if iscroll options has changed and recreate instance with new one
   componentDidUpdate: function(prevProps) {
     var options = this.props.options,
-        x,y,scale;
+        x, y, scale;
 
     if(shallowEqual(prevProps.options, options)) {
       this.refresh()
