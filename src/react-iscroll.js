@@ -60,7 +60,6 @@ var ReactIScroll = React.createClass({
 
   componentDidMount: function() {
     this._initializeIScroll()
-    this._triggerRefreshEvent()
   },
 
   componentWillUnmount: function() {
@@ -97,8 +96,6 @@ var ReactIScroll = React.createClass({
 
       this._iScrollInstance.scrollTo(x,y)
     }
-
-    this._triggerRefreshEvent()
   },
 
   getIScrollInstance: function() {
@@ -110,8 +107,18 @@ var ReactIScroll = React.createClass({
   },
 
   _initializeIScroll: function() {
+    var self = this,
+        origRefresh;
     // Create iScroll instance with given options
     this._iScrollInstance = new this.props.iscroll(this.getDOMNode(), this.props.options)
+    this._triggerRefreshEvent()
+
+    // Patch iscroll instance .refresh() function to trigger our onRefresh event
+    origRefresh = this._iScrollInstance.refresh
+    this._iScrollInstance.refresh = function() {
+      origRefresh.apply(self._iScrollInstance)
+      self._triggerRefreshEvent()
+    }
 
     // Bind iScroll events
     this._bindIScrollEvents()
