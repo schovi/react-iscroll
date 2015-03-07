@@ -142,6 +142,16 @@ render: function() {
 }
 ```
 
+## Example
+
+There is example application. You can run it with this commands:
+
+```
+npm install
+npm run example
+open http://localhost:8080/
+```
+
 ## To-Do
 
 - [x] Make this README.md :)
