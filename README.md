@@ -25,112 +25,122 @@ React components are great way how to compose your application. And they are gre
 
 Simple example app. Allow scrolling on long list and catch event when scrolling starts.
 
-    var React = require('react'),
-        ReactIScroll = require('react-iscroll'),
-        iScroll = require('iscroll');
+```js
+var React = require('react'),
+    ReactIScroll = require('react-iscroll'),
+    iScroll = require('iscroll');
 
-    var ExampleApp = React.createClass({
-      getDefaultProps: function() {
-        options: {
-          mouseWheel: true,
-          scrollbars: true
-        },
-        wrapperStyle: {
-          height:'100%',
-          overflow:'hidden'
-        }
-      },
-      onScrollStart: function() {
-        console.log("iScroll starts scrolling")
-      },
-      render: function() {
-        var i = 0, len = 1000, listOfLi = [];
+var ExampleApp = React.createClass({
+  getDefaultProps: function() {
+    options: {
+      mouseWheel: true,
+      scrollbars: true
+    },
+    wrapperStyle: {
+      height:'100%',
+      overflow:'hidden'
+    }
+  },
+  onScrollStart: function() {
+    console.log("iScroll starts scrolling")
+  },
+  render: function() {
+    var i = 0, len = 1000, listOfLi = [];
 
-        for(i; i < len; i++) {
-          listOfLi.push(<li key={i}>Row {i+1}</li>)
-        }
+    for(i; i < len; i++) {
+      listOfLi.push(<li key={i}>Row {i+1}</li>)
+    }
 
-        return (
-          <div style={this.props.wrapperStyle}>
-            <h1>Example of scrollable list</h1>
-            <ReactIScroll iscroll={iScroll}
-                          options={this.props.options}
-                          onScrollStart={this.onScrollStart}>
-              <ul>
-                {listOfLi}
-              </ul>
-            </ReactIScroll>
-          </div>
-        )
-      }
-    })
-
+    return (
+      <div style={this.props.wrapperStyle}>
+        <h1>Example of scrollable list</h1>
+        <ReactIScroll iscroll={iScroll}
+                      options={this.props.options}
+                      onScrollStart={this.onScrollStart}>
+          <ul>
+            {listOfLi}
+          </ul>
+        </ReactIScroll>
+      </div>
+    )
+  }
+})
+```
 
 ## Configuration (API)
 
 Basic configuration. Just component with iScroll library. You can pick build which you want.
 
-    var iScroll = require('iscroll/build/iscroll-lite')
+```js
+var iScroll = require('iscroll/build/iscroll-lite')
 
-    <ReactIScroll iscroll={iScroll}>
-      <div>Long content...</div>
-    </ReactIScroll>
+<ReactIScroll iscroll={iScroll}>
+  <div>Long content...</div>
+</ReactIScroll>
+```
 
 You can customize iScroll options with `options` property. Supports all from [iScroll manual](http://iscrolljs.com/)
 
-    var iScroll = require('iscroll/build/iscroll-probe')
-    var options = {
-      mouseWheel: true,
-      scrollbars: true,
-      freeScroll: true,
-      invertWheelDirection: true,
-      momentum: false,
-      indicators: {...}
-    }
+```js
+var iScroll = require('iscroll/build/iscroll-probe')
+var options = {
+  mouseWheel: true,
+  scrollbars: true,
+  freeScroll: true,
+  invertWheelDirection: true,
+  momentum: false,
+  indicators: {...}
+}
 
-    <ReactIScroll iscroll={iScroll}
-                  options={options}>
-      <div>Long content...</div>
-    </ReactIScroll>
+<ReactIScroll iscroll={iScroll}
+              options={options}>
+  <div>Long content...</div>
+</ReactIScroll>
+```
 
 Component supports all iScroll events. All of them passed iScroll instance to callback.
 
-    var iScroll = require('iscroll/build/iscroll-probe')
+```js
+var iScroll = require('iscroll/build/iscroll-probe')
 
-    <ReactIScroll iscroll={iScroll}
-                  onBeforeScrollStart={this.onBeforeScrollStart}
-                  onScrollCancel={this.onScrollCancel}
-                  onScrollStart={this.onScrollStart}
-                  onScroll={this.onScroll}
-                  onScrollEnd={this.onScrollEnd}
-                  onFlick={this.onFlick}
-                  onZoomStart={this.onZoomStart}
-                  onZoomEnd={this.onZoomEnd}>
-      <div>Long content...</div>
-    </ReactIScroll>
+<ReactIScroll iscroll={iScroll}
+              onBeforeScrollStart={this.onBeforeScrollStart}
+              onScrollCancel={this.onScrollCancel}
+              onScrollStart={this.onScrollStart}
+              onScroll={this.onScroll}
+              onScrollEnd={this.onScrollEnd}
+              onFlick={this.onFlick}
+              onZoomStart={this.onZoomStart}
+              onZoomEnd={this.onZoomEnd}>
+  <div>Long content...</div>
+</ReactIScroll>
+```
 
 Plus there is one special event 'onRefresh' which is triggered when iScroll is refreshed. You can then get state of iScroll like `iscroll.hasVerticalScroll`, `iscroll.x` or `iscroll.scale`.
 
 **Watch out when updating state by value from iScroll. Always update state only when value changed to prevent circular updating (stack level too deep)**
 
-    var iScroll = require('iscroll/build/iscroll-lite')
+```js
+var iScroll = require('iscroll/build/iscroll-lite')
 
-    onRefresh: function(iScrollInstance) {
-      var yScroll = iScrollInstance.y;
+onRefresh: function(iScrollInstance) {
+  var yScroll = iScrollInstance.y;
 
-      console.log("vertical position:" + yScroll)
+  console.log("vertical position:" + yScroll)
 
-      if(this.state.y != yScroll) {
-        this.setState({y: yScroll})
-      }
-    },
-    render: function() {
-      return (
-        <ReactIScroll iscroll={iScroll}
-                      onRefresh={this.onRefresh}>
-          <div>Long content...</div>
-        </ReactIScroll>
-      )
+  if(this.state.y != yScroll) {
+    this.setState({y: yScroll})
+  }
+},
+render: function() {
+  return (
+    <ReactIScroll iscroll={iScroll}
+                  onRefresh={this.onRefresh}>
+      <div>Long content...</div>
+    </ReactIScroll>
+  )
+}
+```
 
 ## To-Do
 
