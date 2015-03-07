@@ -90,7 +90,7 @@ var ReactIScroll = React.createClass({
       this._initializeIScroll()
 
       // Restore previous state
-      if(scale && options.zoom) {
+      if(scale && this._iScrollInstance.zoom) {
         this._iScrollInstance.zoom(scale, 0, 0, 0)
       }
 
