@@ -158,7 +158,7 @@ var ReactIScroll = React.createClass({
       currentEvents = this._iScrollBindedEvents
 
       if(prevEvent) {
-        iScrollInstance.off(eventName, this._iScrollBindedEvents[eventName])
+        iScrollInstance.off(eventName, currentEvents[eventName])
         currentEvents[eventName] = undefined
       }
 
