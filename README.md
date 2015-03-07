@@ -1,6 +1,6 @@
 # React iScroll
 
-React component for wrapping [iScrol](http://iscrolljs.com/ "iScroll's Homepage") library.
+React component for wrapping iScrol library.
 
 
 ### What is iScroll?
@@ -160,7 +160,7 @@ open http://localhost:8080/
 - [ ] Add tests
 - [ ] Think about `shouldComponentUpdate`. Now it is always true because `this.props.children` are new object everytime and can't be compared via `==` or `===`. Maybe there is some way how to cheaply compare them.
 - [ ] Standalone build
-- [ ] Publish to npm
+- [x] Publish to npm
 
 ## Licence
 
