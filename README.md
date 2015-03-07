@@ -124,8 +124,8 @@ Plus there is one special event 'onRefresh' which is triggered when iScroll is r
         this.setState({y: yScroll})
       }
     },
-  render: function() {
-    return (
+    render: function() {
+      return (
         <ReactIScroll iscroll={iScroll}
                       onRefresh={this.onRefresh}>
           <div>Long content...</div>
