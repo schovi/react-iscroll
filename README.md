@@ -1,6 +1,6 @@
 # React iScroll
 
-React component for wrapping iScrol library.
+React component for wrapping iScroll library.
 
 
 ### What is iScroll?
