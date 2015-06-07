@@ -179,7 +179,7 @@ var ReactIScroll = React.createClass({
 
   render: function() {
     return React.createElement("div", {className: this.props.className, style: this.props.style},
-             React.createElement("div", null, this.props.children)
+             React.createElement("div", {style: this.props.scrollerStyle}, this.props.children)
            )
   }
 })
