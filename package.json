@@ -29,5 +29,8 @@
   },
   "scripts": {
     "example": "webpack-dev-server --content-base example/ --config example/webpack.config.js --progress --hot --inline"
+  },
+  "dependencies": {
+    "polyfill-function-prototype-bind": "0.0.1"
   }
 }

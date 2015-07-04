@@ -1,7 +1,23 @@
 var React        = require('react'),
     shallowEqual = require('react/lib/shallowEqual'),
+    throttledDebounce = function(fn, threshhold, context) {
+      var delayed;
+      var caller = function() {
+        delayed = false;
+        fn();
+      }.bind(context || this);
+
+      return function() {
+        if(!delayed) {
+          delayed = true;
+          setTimeout(caller, threshhold);
+        }
+      }
+    },
     availableEvents,
     propTypes;
+
+require('polyfill-function-prototype-bind')
 
 // Events available on iScroll instance
 // [`iscroll event name`, `react component event name`]
@@ -48,6 +64,7 @@ var ReactIScroll = React.createClass({
 
   getDefaultProps: function() {
     return {
+      refreshTimeout: 100,
       options: {},
       style: {
         position: "relative",
@@ -103,6 +120,10 @@ var ReactIScroll = React.createClass({
   },
 
   refresh: function() {
+    this._refreshTimeoutCall()
+  }
+
+  _refresh: function() {
     this._iScrollInstance.refresh()
   },
 
@@ -119,6 +140,8 @@ var ReactIScroll = React.createClass({
       origRefresh.apply(self._iScrollInstance)
       self._triggerRefreshEvent()
     }
+
+    this._refreshTimeoutCall = throttledDebounce(this._refresh, this.props.refreshTimeout, this)
 
     // Bind iScroll events
     this._bindIScrollEvents()
