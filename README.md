@@ -164,4 +164,4 @@ open http://localhost:8080/
 
 ## Licence
 
-Reditor is released under the [MIT License](http://www.opensource.org/licenses/MIT).
+React iScroll is released under the [MIT License](http://www.opensource.org/licenses/MIT).
