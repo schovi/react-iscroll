@@ -27,6 +27,12 @@
   "peerDependencies": {
     "react": ">=0.12.2"
   },
+  "browserify": {
+    "transform": [
+      "babelify",
+      "browserify-shim"
+    ]
+  },
   "scripts": {
     "example": "webpack-dev-server --content-base example/ --config example/webpack.config.js --progress --hot --inline"
   }
