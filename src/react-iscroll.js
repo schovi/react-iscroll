@@ -138,7 +138,7 @@ var ReactIScroll = React.createClass({
   _updateIScrollEvents: function(props1, props2) {
     var len = availableEvents.length,
         i = 0,
-        evenNames;
+        eventNames;
 
     for(i; i < len; i++) {
       eventNames = availableEvents[i]
