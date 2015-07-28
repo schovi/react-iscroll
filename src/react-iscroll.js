@@ -48,6 +48,7 @@ var ReactIScroll = React.createClass({
 
   getDefaultProps: function() {
     return {
+      defer: 0,
       options: {},
       style: {
         position: "relative",
@@ -103,29 +104,33 @@ var ReactIScroll = React.createClass({
   },
 
   refresh: function() {
-    this._iScrollInstance.refresh()
+    this._iScrollInstance && this._iScrollInstance.refresh()
   },
 
   _initializeIScroll: function() {
     var self = this,
         origRefresh;
-    // Create iScroll instance with given options
-    this._iScrollInstance = new this.props.iscroll(this.getDOMNode(), this.props.options)
-    this._triggerRefreshEvent()
 
-    // Patch iscroll instance .refresh() function to trigger our onRefresh event
-    origRefresh = this._iScrollInstance.refresh
-    this._iScrollInstance.refresh = function() {
-      origRefresh.apply(self._iScrollInstance)
+    setTimeout(function() {
+      // Create iScroll instance with given options
+      self._iScrollInstance = new self.props.iscroll(self.getDOMNode(), self.props.options)
       self._triggerRefreshEvent()
-    }
 
-    // Bind iScroll events
-    this._bindIScrollEvents()
+      // Patch iscroll instance .refresh() function to trigger our onRefresh event
+      origRefresh = self._iScrollInstance.refresh
+      self._iScrollInstance.refresh = function() {
+        origRefresh.apply(self._iScrollInstance)
+        self._triggerRefreshEvent()
+      }
+
+      // Bind iScroll events
+      self._bindIScrollEvents()
+    }, this.props.defer)
   },
 
   _teardownIScroll: function() {
     this._iScrollInstance.destroy()
+    this._iScrollInstance = undefined
   },
 
   _bindIScrollEvents: function() {
