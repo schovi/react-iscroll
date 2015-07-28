@@ -146,9 +146,10 @@ render: function() {
 
 Return iScroll instance if initialized
 
-### function component.withIScroll([callback])
+### function component.withIScroll([waitForInit], callback)
 
-Run callback with iScroll instance as argument if instance is initialized
+Run callback with iScroll instance as argument if instance is initialized.
+You can pass `true` as first argument for call callback after iscroll is initialized
 
 ```js
   onSomethingClick: function(ev) {

@@ -60,6 +60,10 @@ var ReactIScroll = React.createClass({
     }
   },
 
+  componentWillMount: function() {
+    this._queuedCallbacks = []
+  },
+
   componentDidMount: function() {
     this._initializeIScroll()
   },
@@ -109,8 +113,16 @@ var ReactIScroll = React.createClass({
     return this._iScrollInstance;
   },
 
-  withIScroll: function(callback) {
-    this.getIScroll() && callback(this.getIScroll())
+  withIScroll: function(waitForInit, callback) {
+    if(!callback && typeof waitForInit == "function") {
+      callback = waitForInit
+    }
+
+    if(this.getIScroll()) {
+      callback(this.getIScroll())
+    } else if (waitForInit) {
+      this._queuedCallbacks.push(callback)
+    }
   },
 
   refresh: function() {
@@ -135,9 +147,21 @@ var ReactIScroll = React.createClass({
 
       // Bind iScroll events
       self._bindIScrollEvents()
+
+      self._callQueuedCallbacks()
     }, this.props.defer)
   },
 
+  _callQueuedCallbacks: function() {
+    var callbacks = this._queuedCallbacks,
+        len = callbacks.length, i = 0;
+
+    this._queuedCallbacks = []
+
+    for(i; i < len; i++) {
+      callbacks[i](this.getIScroll())
+    }
+  },
   _teardownIScroll: function() {
     this._iScrollInstance.destroy()
     this._iScrollInstance = undefined
