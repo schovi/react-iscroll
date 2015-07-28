@@ -142,6 +142,36 @@ render: function() {
 }
 ```
 
+### function component.getIScroll()
+
+Return iScroll instance if initialized
+
+### function component.withIScroll([callback])
+
+Run callback with iScroll instance as argument if instance is initialized
+
+```js
+  onSomethingClick: function(ev) {
+    ev.preventDefault()
+    this.refs.iscroll.withIScroll(function(iscroll) {
+      iscroll.destroy()
+    })
+  },
+
+  render: function() {
+    return(
+      <div>
+        <a class="#" onClick={this.onSomethingClick}>Do something</a>
+        <ReactIScroll ref="iscroll"
+                      iscroll={iScroll}
+                      onRefresh={this.onRefresh}>
+          <div>Long content...</div>
+        </ReactIScroll>
+      </div>
+    )
+  }
+```
+
 ## Example
 
 There is example application. You can run it with this commands:

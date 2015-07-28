@@ -99,8 +99,17 @@ var ReactIScroll = React.createClass({
     }
   },
 
-  getIScrollInstance: function() {
+  getIScroll: function() {
     return this._iScrollInstance;
+  },
+
+  getIScrollInstance: function() {
+    console.warn("Function 'getIScrollInstance' is deprecated. Instead use 'getIScroll'")
+    return this._iScrollInstance;
+  },
+
+  withIScroll: function(callback) {
+    this.getIScroll() && callback(this.getIScroll())
   },
 
   refresh: function() {
