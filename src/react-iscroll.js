@@ -34,11 +34,12 @@ propTypes = {
         console.warn(componentName + ": options.zoom is true, but iscroll-zoom version is not loaded.")
       }
     }
-  }
+  },
+  onRefresh: React.PropTypes.func
 }
 
 for(var i = 0; i < availableEvents.length; i++) {
-  propTypes[availableEvents[i]] = React.PropTypes.func
+  propTypes[availableEvents[i][1]] = React.PropTypes.func
 }
 
 var ReactIScroll = React.createClass({
