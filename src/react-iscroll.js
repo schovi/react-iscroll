@@ -133,11 +133,13 @@ var ReactIScroll = React.createClass({
     var self = this;
     var init = function() {
       // Create iScroll instance with given options
+      var origRefresh;
+
       self._iScrollInstance = new self.props.iscroll(self.getDOMNode(), self.props.options)
       self._triggerRefreshEvent()
 
       // Patch iscroll instance .refresh() function to trigger our onRefresh event
-      var origRefresh = self._iScrollInstance.refresh
+      origRefresh = self._iScrollInstance.refresh
       self._iScrollInstance.refresh = function() {
         origRefresh.apply(self._iScrollInstance)
         self._triggerRefreshEvent()
