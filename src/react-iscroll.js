@@ -1,5 +1,5 @@
 import React from 'react'
-import shallowEqual from 'react/lib/shallowEqual'
+import equal from 'deep-equal'
 const { PropTypes } = React
 
 // Events available on iScroll instance
@@ -74,7 +74,7 @@ export default class ReactIScroll extends React.Component {
 
   // There is no state, we can compare only props.
   shouldComponentUpdate(nextProps) {
-    return !shallowEqual(this.props, nextProps)
+    return !equal(this.props, nextProps)
   }
 
   // Check if iscroll options has changed and recreate instance with new one
@@ -82,7 +82,7 @@ export default class ReactIScroll extends React.Component {
     var options = this.props.options,
         x, y, scale;
 
-    if(shallowEqual(prevProps.options, options)) {
+    if(equal(prevProps.options, options)) {
       this.refresh()
       this._updateIScrollEvents(prevProps, this.props)
     } else {
@@ -127,7 +127,7 @@ export default class ReactIScroll extends React.Component {
   }
 
   refresh() {
-    this.getIScroll() && this.getIScroll().refresh()
+    this.withIScroll((iScroll) => iScroll.refresh())
   }
 
   _initializeIScroll() {

@@ -19,6 +19,9 @@
     "url": "git@github.com:schovi/react-iscroll.git"
   },
   "main": "dist/react-iscroll.js",
+  "dependencies": {
+    "deep-equal": "^1.0.0"
+  },
   "devDependencies": {
     "babel": "^5.8.20",
     "babel-core": "^5.8.14",
