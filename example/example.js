@@ -1,6 +1,6 @@
 import './example.css'
 import React from 'react'
-import ReactIScroll from '../index.js'
+import ReactIScroll from '../src/react-iscroll.js'
 import IScroll from 'iscroll'
 
 const iScrollOptions = {
