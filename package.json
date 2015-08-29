@@ -1,6 +1,6 @@
 {
   "name": "react-iscroll",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/schovi/react-iscroll",
   "keywords": [
     "react",
@@ -39,7 +39,7 @@
   "scripts": {
     "compile": "babel -d dist/ src/",
     "prepublish": "npm run compile",
-    "example": "webpack-dev-server --content-base example/ --config example/webpack.config.js --progress --hot --inline"
+    "example": "npm run compile && webpack-dev-server --content-base example/ --config example/webpack.config.js --progress --hot --inline"
   },
   "private": false
 }
