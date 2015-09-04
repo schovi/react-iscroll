@@ -130,11 +130,11 @@ var ReactIScroll = React.createClass({
   },
 
   _initializeIScroll: function() {
-    var self = this,
-        origRefresh;
-
-    setTimeout(function() {
+    var self = this;
+    var init = function() {
       // Create iScroll instance with given options
+      var origRefresh;
+
       self._iScrollInstance = new self.props.iscroll(self.getDOMNode(), self.props.options)
       self._triggerRefreshEvent()
 
@@ -149,7 +149,14 @@ var ReactIScroll = React.createClass({
       self._bindIScrollEvents()
 
       self._callQueuedCallbacks()
-    }, this.props.defer)
+    };
+
+    if (this.props.defer) {
+      setTimeout(init, this.props.defer)
+    }
+    else {
+      init()
+    }
   },
 
   _callQueuedCallbacks: function() {
