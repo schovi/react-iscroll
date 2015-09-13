@@ -19,6 +19,7 @@
     "url": "git@github.com:schovi/react-iscroll.git"
   },
   "main": "dist/react-iscroll.js",
+  "jsnext:main": "src/react-iscroll.jsx",
   "dependencies": {
     "deep-equal": "^1.0.0"
   },
