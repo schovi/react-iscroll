@@ -1,7 +1,12 @@
 {
   "name": "react-iscroll",
-  "version": "0.0.10",
+  "version": "0.1.2",
   "homepage": "https://github.com/schovi/react-iscroll",
+  "keywords": [
+    "react",
+    "iscroll",
+    "scroll"
+  ],
   "bugs": {
     "url": "https://github.com/schovi/react-iscroll/issues"
   },
@@ -13,21 +18,29 @@
     "type": "git",
     "url": "git@github.com:schovi/react-iscroll.git"
   },
-  "main": "index.js",
+  "main": "dist/react-iscroll.js",
+  "jsnext:main": "src/react-iscroll.jsx",
+  "dependencies": {
+    "deep-equal": "^1.0.0"
+  },
   "devDependencies": {
-    "css-loader": "^0.9.1",
-    "extract-text-webpack-plugin": "^0.3.8",
+    "babel": "^5.8.20",
+    "babel-core": "^5.8.14",
+    "babel-loader": "^5.3.2",
+    "css-loader": "^0.15.6",
     "iscroll": "^5.1.3",
-    "jsx-loader": "^0.12.2",
-    "react-hot-loader": "^1.1.6",
-    "style-loader": "^0.8.3",
-    "webpack": "^1.5.3",
-    "webpack-dev-server": "^1.7.0"
+    "react-hot-loader": "^1.2.8",
+    "style-loader": "^0.12.3",
+    "webpack": "^1.10.5",
+    "webpack-dev-server": "^1.10.1"
   },
   "peerDependencies": {
-    "react": ">=0.12.2"
+    "react": "^0.13.3"
   },
   "scripts": {
-    "example": "webpack-dev-server --content-base example/ --config example/webpack.config.js --progress --hot --inline"
-  }
+    "compile": "babel -d dist/ src/",
+    "prepublish": "npm run compile",
+    "example": "npm run compile && webpack-dev-server --content-base example/ --config example/webpack.config.js --progress --hot --inline"
+  },
+  "private": false
 }
