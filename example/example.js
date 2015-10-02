@@ -5,7 +5,8 @@ import IScroll from 'iscroll'
 
 const iScrollOptions = {
   mouseWheel: true,
-  scrollbars: true
+  scrollbars: true,
+  scrollX: true
 }
 
 class Example extends React.Component {
@@ -55,13 +56,14 @@ class Example extends React.Component {
     list.shift()
 
     this.setState({list: list})
+
   }
 
   onScrollRefresh(iscroll) {
-    const hasVerticalScroll = iscroll.hasVerticalScroll;
+    const hasVerticalScroll = iscroll.hasVerticalScroll
 
-    if(this.state.canScroll !== hasVerticalScroll) {
-      this.setState({canScroll: hasVerticalScroll})
+    if(this.state.canVerticallyScroll !== hasVerticalScroll) {
+      this.setState({canVerticallyScroll: hasVerticalScroll})
     }
   }
 
@@ -85,7 +87,8 @@ class Example extends React.Component {
                         options={iScrollOptions}
                         onRefresh={this.onScrollRefresh.bind(this)}
                         onScrollStart={this.onScrollStart.bind(this)}
-                        onScrollEnd={this.onScrollEnd.bind(this)}>
+                        onScrollEnd={this.onScrollEnd.bind(this)}
+                        scrollerStyle={{width: "200%"}}>
             <ul>
               {listOfLi}
             </ul>
@@ -94,7 +97,7 @@ class Example extends React.Component {
         <div id="footer">
           <button onClick={this.addRow.bind(this)} className="button">Add one row</button>
           status: {this.state.isScrolling ? 'Scrolling' : 'Standby' } |
-          can scroll: {this.state.canScroll ? 'Yes' : 'No'}
+          can vertically scroll: {this.state.canVerticallyScroll ? 'Yes' : 'No'}
         </div>
       </div>
     )
