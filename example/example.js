@@ -29,15 +29,15 @@ class Example extends React.Component {
     }
   }
 
-  onScrollStart() {
+  onScrollStart = () => {
     this.setState({isScrolling: true})
   }
 
-  onScrollEnd(iscroll) {
+  onScrollEnd = (iscroll) => {
     this.setState({isScrolling: false, y: iscroll.y})
   }
 
-  addRow(ev) {
+  addRow = (ev) => {
     ev.preventDefault()
 
     const list  = this.state.list,
@@ -48,7 +48,7 @@ class Example extends React.Component {
     this.setState({list: list, lastId: newId})
   }
 
-  removeRow(ev) {
+  removeRow = (ev) => {
     ev.preventDefault()
 
     const list = this.state.list;
@@ -59,7 +59,7 @@ class Example extends React.Component {
 
   }
 
-  onScrollRefresh(iscroll) {
+  onScrollRefresh = (iscroll) => {
     const hasVerticalScroll = iscroll.hasVerticalScroll
 
     if(this.state.canVerticallyScroll !== hasVerticalScroll) {
@@ -79,15 +79,15 @@ class Example extends React.Component {
     return (
       <div>
         <div id="header">
-          <button onClick={this.removeRow.bind(this)} className="button">Remove first row</button>
+          <button onClick={this.removeRow} className="button">Remove first row</button>
           React IScroll component example
         </div>
         <div id="wrapper">
           <ReactIScroll iscroll={IScroll}
                         options={iScrollOptions}
-                        onRefresh={this.onScrollRefresh.bind(this)}
-                        onScrollStart={this.onScrollStart.bind(this)}
-                        onScrollEnd={this.onScrollEnd.bind(this)}
+                        onRefresh={this.onScrollRefresh}
+                        onScrollStart={this.onScrollStart}
+                        onScrollEnd={this.onScrollEnd}
                         scrollerStyle={{width: "200%"}}>
             <ul>
               {listOfLi}
@@ -95,7 +95,7 @@ class Example extends React.Component {
           </ReactIScroll>
         </div>
         <div id="footer">
-          <button onClick={this.addRow.bind(this)} className="button">Add one row</button>
+          <button onClick={this.addRow} className="button">Add one row</button>
           status: {this.state.isScrolling ? 'Scrolling' : 'Standby' } |
           can vertically scroll: {this.state.canVerticallyScroll ? 'Yes' : 'No'}
         </div>
