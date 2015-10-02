@@ -5,7 +5,8 @@ var IScroll = require('iscroll')
 
 var iScrollOptions = {
   mouseWheel: true,
-  scrollbars: true
+  scrollbars: true,
+  scrollX: true
 }
 
 var Example = React.createClass({
@@ -50,8 +51,8 @@ var Example = React.createClass({
   },
   onScrollRefresh: function(iscroll) {
     var hasVerticalScroll = iscroll.hasVerticalScroll
-    if(this.state.canScroll !== hasVerticalScroll) {
-      this.setState({canScroll: hasVerticalScroll})
+    if(this.state.canVerticallyScroll !== hasVerticalScroll) {
+      this.setState({canVerticallyScroll: hasVerticalScroll})
     }
   },
   render: function() {
@@ -74,7 +75,8 @@ var Example = React.createClass({
                         options={iScrollOptions}
                         onRefresh={this.onScrollRefresh}
                         onScrollStart={this.onScrollStart}
-                        onScrollEnd={this.onScrollEnd}>
+                        onScrollEnd={this.onScrollEnd}
+                        scrollerStyle={{width: "200%"}}>
             <ul>
               {listOfLi}
             </ul>
@@ -83,7 +85,7 @@ var Example = React.createClass({
         <div id="footer">
           <button onClick={this.addRow} className="button">Add one row</button>
           status: {this.state.isScrolling ? 'Scrolling' : 'Standby' } |
-          can scroll: {this.state.canScroll ? 'Yes' : 'No'}
+          can vertically scroll: {this.state.canVerticallyScroll ? 'Yes' : 'No'}
         </div>
       </div>
     )
