@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom';
 import equal from 'deep-equal'
 const { PropTypes } = React
 
@@ -139,7 +140,7 @@ export default class ReactIScroll extends React.Component {
 
     setTimeout(() => {
       // Create iScroll instance with given options
-      const iScrollInstance = new iScroll(React.findDOMNode(this), options)
+      const iScrollInstance = new iScroll(ReactDOM.findDOMNode(this), options)
       this._iScrollInstance = iScrollInstance
 
       // TODO there should be new event 'onInitialize'
