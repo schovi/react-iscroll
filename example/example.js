@@ -3,7 +3,7 @@ import React from 'react'
 import ReactIScroll from '../dist/react-iscroll'
 import IScroll from 'iscroll'
 
-const iScrollOptions = {
+const IScrollOptions = {
   mouseWheel: true,
   scrollbars: true,
   scrollX: true
@@ -33,8 +33,8 @@ class Example extends React.Component {
     this.setState({isScrolling: true})
   }
 
-  onScrollEnd = (iscroll) => {
-    this.setState({isScrolling: false, y: iscroll.y})
+  onScrollEnd = (IScrollInstance) => {
+    this.setState({isScrolling: false, y: IScrollInstance.y})
   }
 
   addRow = (ev) => {
@@ -59,8 +59,8 @@ class Example extends React.Component {
 
   }
 
-  onScrollRefresh = (iscroll) => {
-    const hasVerticalScroll = iscroll.hasVerticalScroll
+  onScrollRefresh = (IScrollInstance) => {
+    const hasVerticalScroll = IScrollInstance.hasVerticalScroll
 
     if(this.state.canVerticallyScroll !== hasVerticalScroll) {
       this.setState({canVerticallyScroll: hasVerticalScroll})
@@ -83,8 +83,8 @@ class Example extends React.Component {
           React IScroll component example
         </div>
         <div id="wrapper">
-          <ReactIScroll iscroll={IScroll}
-                        options={iScrollOptions}
+          <ReactIScroll IScroll={IScroll}
+                        options={IScrollOptions}
                         onRefresh={this.onScrollRefresh}
                         onScrollStart={this.onScrollStart}
                         onScrollEnd={this.onScrollEnd}
