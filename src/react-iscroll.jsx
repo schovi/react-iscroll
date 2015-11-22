@@ -18,7 +18,10 @@ const availableEvents = [
 
 // Generate propTypes with event function validating
 const propTypes = {
-  defer: PropTypes.number,
+  defer: React.PropTypes.oneOfType([
+    React.PropTypes.bool,
+    React.PropTypes.number
+  ]),
   options: PropTypes.object,
   iscroll: (props, propName, componentName) => {
     const iscroll = props[propName]
@@ -135,30 +138,38 @@ export default class ReactIScroll extends React.Component {
     this.withIScroll((iScroll) => iScroll.refresh())
   }
 
-  _initializeIScroll() {
-    const {iscroll: iScroll, options, defer} = this.props
+  _runInitializeIScroll() {
+    const {iscroll: iScroll, options} = this.props
 
-    setTimeout(() => {
-      // Create iScroll instance with given options
-      const iScrollInstance = new iScroll(ReactDOM.findDOMNode(this), options)
-      this._iScrollInstance = iScrollInstance
+    // Create iScroll instance with given options
+    const iScrollInstance = new iScroll(ReactDOM.findDOMNode(this), options)
+    this._iScrollInstance = iScrollInstance
 
-      // TODO there should be new event 'onInitialize'
+    // TODO there should be new event 'onInitialize'
+    this._triggerRefreshEvent()
+
+    // Patch iscroll instance .refresh() function to trigger our onRefresh event
+    const origRefresh = iScrollInstance.refresh
+
+    iScrollInstance.refresh = () => {
+      origRefresh.apply(iScrollInstance)
       this._triggerRefreshEvent()
+    }
 
-      // Patch iscroll instance .refresh() function to trigger our onRefresh event
-      const origRefresh = iScrollInstance.refresh
+    // Bind iScroll events
+    this._bindIScrollEvents()
 
-      iScrollInstance.refresh = () => {
-        origRefresh.apply(iScrollInstance)
-        this._triggerRefreshEvent()
-      }
+    this._callQueuedCallbacks()
+  }
 
-      // Bind iScroll events
-      this._bindIScrollEvents()
+  _initializeIScroll() {
+    const {defer} = this.props
 
-      this._callQueuedCallbacks()
-    }, defer)
+    if(defer === false) {
+      this._runInitializeIScroll()
+    } else {
+      setTimeout(() => this._runInitializeIScroll(), defer)
+    }
   }
 
   _callQueuedCallbacks() {
