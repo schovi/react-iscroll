@@ -38,8 +38,12 @@ var ExampleApp = React.createClass({
         scrollbars: true
       },
       wrapperStyle: {
-        height:'100%',
-        overflow:'hidden'
+        position: 'absolute',
+        zIndex: '1',
+        top: '0',
+        bottom: '45px',
+        left: '0',
+        overflow: 'hidden',
       }
     })
   },
