@@ -32,14 +32,16 @@ var React = require('react'),
 
 var ExampleApp = React.createClass({
   getDefaultProps: function() {
-    options: {
-      mouseWheel: true,
-      scrollbars: true
-    },
-    wrapperStyle: {
-      height:'100%',
-      overflow:'hidden'
-    }
+    return ({
+      options: {
+        mouseWheel: true,
+        scrollbars: true
+      },
+      wrapperStyle: {
+        height:'100%',
+        overflow:'hidden'
+      }
+    })
   },
   onScrollStart: function() {
     console.log("iScroll starts scrolling")
