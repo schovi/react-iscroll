@@ -1,23 +1,33 @@
-var path = require("path")
+var webpack = require('webpack')
 
 module.exports = {
-  entry:  './example/example.js',
+  context: __dirname,
+  entry:  {
+    example: [
+      './example.js'
+    ]
+  },
   devtool: 'eval-source-map',
   output: {
-    filename: 'example.js',
-    path: '/',
-    publicPath: '/'
+    path: __dirname,
+    publicPath: '/',
+    filename: '[name].js'
   },
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
-        loader: 'react-hot-loader!babel-loader',
-        exclude: /node_modules/
+        loader: 'babel',
+        exclude: /node_modules/,
+        query: {
+          presets: ["es2015", "react"],
+          plugins: ["transform-class-properties"]
+        }
       },
       {
         test: /\.css$/,
-        loader: "css-loader"
+        loader: "css",
+        exclude: /node_modules/
       }
     ]
   }

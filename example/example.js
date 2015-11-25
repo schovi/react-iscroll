@@ -14,10 +14,10 @@ class Example extends React.Component {
   constructor(props) {
     super(props)
 
-    const list = [], len = 30;
-    let i = 0;
+    const list = [];
+    const len = 30;
 
-    for(i; i < len; i++) {
+    for(let i = 0; i < len; i++) {
       list.push(i+1)
     }
 
