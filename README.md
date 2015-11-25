@@ -183,11 +183,9 @@ You can pass `true` as first argument for call callback after iscroll is initial
 
 There is example application. You can run it with this commands:
 
-```
-npm install
-npm run example
-open http://localhost:8080/
-```
+- `npm install`
+- `npm run example`
+- `open http://localhost:8080/`
 
 ## To-Do
 
