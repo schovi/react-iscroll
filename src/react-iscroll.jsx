@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import equal from 'deep-equal'
 const { PropTypes } = React
 
-// Events available on iScroll instance
-// [`iscroll event name`, `react component event name`]
+// Events available on IScroll instance
+// [`IScroll event name`, `react component event name`]
 const availableEvents = [
   ['beforeScrollStart', "onBeforeScrollStart"],
   ['scrollCancel', "onScrollCancel"],
@@ -23,19 +23,19 @@ const propTypes = {
     React.PropTypes.number
   ]),
   options: PropTypes.object,
-  iscroll: (props, propName, componentName) => {
-    const iscroll = props[propName]
-    const proto   = iscroll && iscroll.prototype
+  IScroll: (props, propName, componentName) => {
+    const IScroll = props[propName]
+    const proto   = IScroll && IScroll.prototype
 
-    if(!iscroll || !proto || !proto.version || !proto.scrollTo) {
-      return new Error(componentName + ": iscroll not passed to component props.")
+    if(!IScroll || !proto || !proto.version || !proto.scrollTo) {
+      return new Error(componentName + ": IScroll not passed to component props.")
     } else {
       if(!/^5\..*/.test(proto.version)) {
-        console.warn(componentName + ": different version than 5.x.y of iscroll is loaded. Some features won't work properly.")
+        console.warn(componentName + ": different version than 5.x.y of IScroll is required. Some features won't work properly.")
       }
 
       if(props.options && props.options.zoom && !proto.zoom) {
-        console.warn(componentName + ": options.zoom is set, but iscroll-zoom version is not loaded. This feature won't works properly.")
+        console.warn(componentName + ": options.zoom is set, but iscroll-zoom version is not required. Zoom feature won't work properly.")
       }
     }
   },
@@ -66,7 +66,7 @@ export default class ReactIScroll extends React.Component {
   constructor(props) {
     super(props)
     this._queuedCallbacks = []
-    this._iScrollBindedEvents = {}
+    this._IScrollBindedEvents = {}
   }
 
   componentDidMount() {
@@ -82,23 +82,23 @@ export default class ReactIScroll extends React.Component {
     return !equal(this.props, nextProps)
   }
 
-  // Check if iscroll options has changed and recreate instance with new one
+  // Check if IScroll options has changed and recreate instance with new one
   componentDidUpdate(prevProps) {
-    // If options are same, iscroll behaviour will not change. Just refresh events and trigger refresh
+    // If options are same, IScroll behaviour will not change. Just refresh events and trigger refresh
     if(equal(prevProps.options, this.props.options)) {
       this._updateIScrollEvents(prevProps, this.props)
       this.refresh()
 
-    // If options changed, we will destroy iScroll instance and create new one with same scroll position
+    // If options changed, we will destroy IScroll instance and create new one with same scroll position
     // TODO test if this will work with indicators
     } else {
-      this.withIScroll(true, (iScrollInstance) => {
+      this.withIScroll(true, (IScrollInstance) => {
         // Save current state
-        const x     = iScrollInstance.x
-        const y     = iScrollInstance.y
-        const scale = iScrollInstance.scale
+        const x     = IScrollInstance.x
+        const y     = IScrollInstance.y
+        const scale = IScrollInstance.scale
 
-        // Destroy current and Create new instance of iscroll
+        // Destroy current and Create new instance of IScroll
         this._teardownIScroll()
         this._initializeIScroll()
 
@@ -114,12 +114,12 @@ export default class ReactIScroll extends React.Component {
   }
 
   getIScroll() {
-    return this._iScrollInstance;
+    return this._IScrollInstance;
   }
 
   getIScrollInstance() {
     console.warn("Function 'getIScrollInstance' is deprecated. Instead use 'getIScroll'")
-    return this._iScrollInstance;
+    return this._IScrollInstance;
   }
 
   withIScroll(waitForInit, callback) {
@@ -135,28 +135,28 @@ export default class ReactIScroll extends React.Component {
   }
 
   refresh() {
-    this.withIScroll((iScroll) => iScroll.refresh())
+    this.withIScroll((IScrollInstance) => IScrollInstance.refresh())
   }
 
   _runInitializeIScroll() {
-    const {iscroll: iScroll, options} = this.props
+    const {IScroll, options} = this.props
 
-    // Create iScroll instance with given options
-    const iScrollInstance = new iScroll(ReactDOM.findDOMNode(this), options)
-    this._iScrollInstance = iScrollInstance
+    // Create IScroll instance with given options
+    const IScrollInstance = new IScroll(ReactDOM.findDOMNode(this), options)
+    this._IScrollInstance = IScrollInstance
 
     // TODO there should be new event 'onInitialize'
     this._triggerRefreshEvent()
 
-    // Patch iscroll instance .refresh() function to trigger our onRefresh event
-    const origRefresh = iScrollInstance.refresh
+    // Patch IScroll instance .refresh() function to trigger our onRefresh event
+    const origRefresh = IScrollInstance.refresh
 
-    iScrollInstance.refresh = () => {
-      origRefresh.apply(iScrollInstance)
+    IScrollInstance.refresh = () => {
+      origRefresh.apply(IScrollInstance)
       this._triggerRefreshEvent()
     }
 
-    // Bind iScroll events
+    // Bind IScroll events
     this._bindIScrollEvents()
 
     this._callQueuedCallbacks()
@@ -184,13 +184,13 @@ export default class ReactIScroll extends React.Component {
   }
 
   _teardownIScroll() {
-    this._iScrollInstance.destroy()
-    this._iScrollInstance = undefined
+    this._IScrollInstance.destroy()
+    this._IScrollInstance = undefined
   }
 
   _bindIScrollEvents() {
-    // Bind events on iScroll instance
-    this._iScrollBindedEvents = {}
+    // Bind events on IScroll instance
+    this._IScrollBindedEvents = {}
     this._updateIScrollEvents({}, this.props)
   }
 
@@ -199,29 +199,29 @@ export default class ReactIScroll extends React.Component {
     const len = availableEvents.length;
 
     for(let i = 0; i < len; i++) {
-      const [iScrollEventName, reactEventName] = availableEvents[i]
-      this._updateIScrollEvent(iScrollEventName, prevProps[reactEventName], nextProps[reactEventName])
+      const [IScrollEventName, reactEventName] = availableEvents[i]
+      this._updateIScrollEvent(IScrollEventName, prevProps[reactEventName], nextProps[reactEventName])
     }
   }
 
   // Unbind and/or Bind event if it was changed during update
-  _updateIScrollEvent(iScrollEventName, prevEvent, currentEvent) {
+  _updateIScrollEvent(IScrollEventName, prevEvent, currentEvent) {
     if(prevEvent !== currentEvent) {
-      this.withIScroll(true, (iScrollInstance) => {
-        const currentEvents = this._iScrollBindedEvents
+      this.withIScroll(true, (IScrollInstance) => {
+        const currentEvents = this._IScrollBindedEvents
 
         if(prevEvent) {
-          iScrollInstance.off(iScrollEventName, currentEvents[iScrollEventName])
-          currentEvents[iScrollEventName] = undefined
+          IScrollInstance.off(IScrollEventName, currentEvents[IScrollEventName])
+          currentEvents[IScrollEventName] = undefined
         }
 
         if(currentEvent) {
           const wrappedCallback = function(...args) {
-            currentEvent(iScrollInstance, ...args)
+            currentEvent(IScrollInstance, ...args)
           }
 
-          iScrollInstance.on(iScrollEventName, wrappedCallback)
-          currentEvents[iScrollEventName] = wrappedCallback
+          IScrollInstance.on(IScrollEventName, wrappedCallback)
+          currentEvents[IScrollEventName] = wrappedCallback
         }
       })
     }
@@ -231,7 +231,7 @@ export default class ReactIScroll extends React.Component {
     const {onRefresh} = this.props
 
     if(onRefresh) {
-      this.withIScroll((iScrollInstance) => onRefresh(iScrollInstance))
+      this.withIScroll((IScrollInstance) => onRefresh(IScrollInstance))
     }
   }
 
