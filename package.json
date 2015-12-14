@@ -1,6 +1,6 @@
 {
   "name": "react-iscroll",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "homepage": "https://github.com/schovi/react-iscroll",
   "keywords": [
     "react",
@@ -39,7 +39,8 @@
     "webpack-dev-server": "^1.10.1"
   },
   "peerDependencies": {
-    "react": ">=0.13.0 <=0.14.x"
+    "react": ">=0.13.0 <=0.14.x",
+    "react-dom": "0.14.x"
   },
   "scripts": {
     "compile": "babel -d dist/ src/",
