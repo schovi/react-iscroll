@@ -236,12 +236,15 @@ export default class ReactIScroll extends React.Component {
   }
 
   render() {
-    return (
-      <div className={this.props.className} style={this.props.style}>
-        <div style={this.props.scrollerStyle}>
-          {this.props.children}
-        </div>
-      </div>
-    )
+    // Keep only html properties
+    const htmlProps = {}
+
+    for(const prop in this.props) {
+      if(!propTypes[prop]) {
+        htmlProps[prop] = this.props[prop]
+      }
+    }
+
+    return <div {...htmlProps} />
   }
 }

@@ -179,6 +179,31 @@ You can pass `true` as first argument for call callback after iscroll is initial
   }
 ```
 
+## Horizonzal scroll
+
+Common usecase of horizontal scrolling
+
+```js
+var React = require('react'),
+    ReactIScroll = require('react-iscroll'),
+    iScroll = require('iscroll');
+
+var HorizontalScroll = React.createClass({
+  render: function() {
+    return (
+      <ReactIScroll iscroll={iScroll}
+                    options={{mouseWheel: true, scrollbars: true, scrollX: true}}>
+        <div style={{width:'200%'}}>
+          <ul>
+            {listOfLi}
+          </ul>
+        </div>
+      </ReactIScroll>
+    )
+  }
+})
+```
+
 ## Example
 
 There is example application. You can run it with this commands:

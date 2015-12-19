@@ -75,7 +75,7 @@ class Example extends React.Component {
     let i = 0;
 
     for(i; i < len; i++) {
-      listOfLi.push(<li key={i}>Pretty row {this.state.list[i]}</li>)
+      listOfLi.push(<li key={i}>Pretty row {this.state.list[i]}<span className="beyond">I'm beyond</span></li>)
     }
 
     return (
@@ -89,11 +89,12 @@ class Example extends React.Component {
                         options={IScrollOptions}
                         onRefresh={this.onScrollRefresh}
                         onScrollStart={this.onScrollStart}
-                        onScrollEnd={this.onScrollEnd}
-                        scrollerStyle={{width: "200%"}}>
-            <ul>
-              {listOfLi}
-            </ul>
+                        onScrollEnd={this.onScrollEnd}>
+            <div style={{width: "110%"}}>
+              <ul>
+                {listOfLi}
+              </ul>
+            </div>
           </ReactIScroll>
         </div>
         <div id="footer">
