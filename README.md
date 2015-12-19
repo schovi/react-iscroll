@@ -43,14 +43,6 @@ var ExampleApp = React.createClass({
       options: {
         mouseWheel: true,
         scrollbars: true
-      },
-      wrapperStyle: {
-        position: 'absolute',
-        zIndex: '1',
-        top: '0',
-        bottom: '45px',
-        left: '0',
-        overflow: 'hidden',
       }
     })
   },
@@ -65,9 +57,9 @@ var ExampleApp = React.createClass({
     }
 
     return (
-      <div style={this.props.wrapperStyle}>
+      <div style={height: '100vh'}>
         <h1>Example of scrollable list</h1>
-        <ReactIScroll iscroll={iScroll}
+        <ReactIScroll iScroll={iScroll}
                       options={this.props.options}
                       onScrollStart={this.onScrollStart}>
           <ul>
@@ -87,7 +79,7 @@ Basic configuration. Just component with iScroll library. You can pick build whi
 ```js
 var iScroll = require('iscroll/build/iscroll-lite')
 
-<ReactIScroll iscroll={iScroll}>
+<ReactIScroll iScroll={iScroll}>
   <div>Long content...</div>
 </ReactIScroll>
 ```
@@ -105,7 +97,7 @@ var options = {
   indicators: {...}
 }
 
-<ReactIScroll iscroll={iScroll}
+<ReactIScroll iScroll={iScroll}
               options={options}>
   <div>Long content...</div>
 </ReactIScroll>
@@ -116,7 +108,7 @@ Component supports all iScroll events. All of them passed iScroll instance to ca
 ```js
 var iScroll = require('iscroll/build/iscroll-probe')
 
-<ReactIScroll iscroll={iScroll}
+<ReactIScroll iScroll={iScroll}
               onBeforeScrollStart={this.onBeforeScrollStart}
               onScrollCancel={this.onScrollCancel}
               onScrollStart={this.onScrollStart}
@@ -147,7 +139,7 @@ onRefresh: function(iScrollInstance) {
 },
 render: function() {
   return (
-    <ReactIScroll iscroll={iScroll}
+    <ReactIScroll iScroll={iScroll}
                   onRefresh={this.onRefresh}>
       <div>Long content...</div>
     </ReactIScroll>
@@ -177,7 +169,7 @@ You can pass `true` as first argument for call callback after iscroll is initial
       <div>
         <a class="#" onClick={this.onSomethingClick}>Do something</a>
         <ReactIScroll ref="iscroll"
-                      iscroll={iScroll}
+                      iScroll={iScroll}
                       onRefresh={this.onRefresh}>
           <div>Long content...</div>
         </ReactIScroll>
@@ -198,7 +190,7 @@ var React = require('react'),
 var HorizontalScroll = React.createClass({
   render: function() {
     return (
-      <ReactIScroll iscroll={iScroll}
+      <ReactIScroll iScroll={iScroll}
                     options={{mouseWheel: true, scrollbars: true, scrollX: true}}>
         <div style={{width:'200%'}}>
           <ul>
