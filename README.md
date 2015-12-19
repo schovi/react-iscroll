@@ -2,6 +2,13 @@
 
 React component for wrapping iScroll library.
 
+## ! Breaking changes in version 1.0.0
+
+- Property for passing iScroll instance is renamed from `iscroll` to `iScroll` and naming is unified across whole package
+  - use it like `<ReactIScroll iScroll={iScroll}>` instead of ~~`<ReactIScroll iscroll={iScroll}>`~~
+- Inner content wrapper is removed. https://github.com/schovi/react-iscroll/commit/ecd75bb75667a45d2e14a2eda0a1b7d56c9d54f4
+  - You can do it by yourself by wrapping childrens of ReactIScroll component into one more div with specific styling (check **Horizontal scroll example** there in README)
+  - Main iScroll element has same behaviour and you can still change styling with `style` and `className` properties.
 
 ### What is iScroll?
 
