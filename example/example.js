@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import IScroll from 'iscroll'
+import iScroll from 'iscroll'
 
 import './example.css'
 import ReactIScroll from '../src/react-iscroll'
 
-const IScrollOptions = {
+const iScrollOptions = {
   mouseWheel: true,
   scrollbars: true,
   scrollX: true
@@ -35,8 +35,8 @@ class Example extends React.Component {
     this.setState({isScrolling: true})
   }
 
-  onScrollEnd = (IScrollInstance) => {
-    this.setState({isScrolling: false, y: IScrollInstance.y})
+  onScrollEnd = (iScrollInstance) => {
+    this.setState({isScrolling: false, y: iScrollInstance.y})
   }
 
   addRow = (ev) => {
@@ -61,8 +61,8 @@ class Example extends React.Component {
 
   }
 
-  onScrollRefresh = (IScrollInstance) => {
-    const hasVerticalScroll = IScrollInstance.hasVerticalScroll
+  onScrollRefresh = (iScrollInstance) => {
+    const hasVerticalScroll = iScrollInstance.hasVerticalScroll
 
     if(this.state.canVerticallyScroll !== hasVerticalScroll) {
       this.setState({canVerticallyScroll: hasVerticalScroll})
@@ -82,11 +82,11 @@ class Example extends React.Component {
       <div>
         <div id="header">
           <button onClick={this.removeRow} className="button">Remove first row</button>
-          React IScroll component example
+          React iScroll component example
         </div>
         <div id="wrapper">
-          <ReactIScroll IScroll={IScroll}
-                        options={IScrollOptions}
+          <ReactIScroll iScroll={iScroll}
+                        options={iScrollOptions}
                         onRefresh={this.onScrollRefresh}
                         onScrollStart={this.onScrollStart}
                         onScrollEnd={this.onScrollEnd}>
