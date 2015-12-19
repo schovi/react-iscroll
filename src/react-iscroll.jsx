@@ -186,8 +186,10 @@ export default class ReactIScroll extends React.Component {
   }
 
   _teardownIScroll() {
-    this._iScrollInstance.destroy()
-    this._iScrollInstance = undefined
+    if (this._iScrollInstance) {
+      this._iScrollInstance.destroy()
+      this._iScrollInstance = undefined
+    }
   }
 
   _bindIScrollEvents() {
