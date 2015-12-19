@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import IScroll from 'iscroll'
 
 import './example.css'
-import ReactIScroll from '../dist/react-iscroll'
+import ReactIScroll from '../src/react-iscroll'
 
 const IScrollOptions = {
   mouseWheel: true,
