@@ -154,13 +154,13 @@ Return iScroll instance if initialized
 ### function component.withIScroll([waitForInit], callback)
 
 Run callback with iScroll instance as argument if instance is initialized.
-You can pass `true` as first argument for call callback after iscroll is initialized
+You can pass `true` as first argument for call callback after iScroll is initialized
 
 ```js
   onSomethingClick: function(ev) {
     ev.preventDefault()
-    this.refs.iscroll.withIScroll(function(iscroll) {
-      iscroll.destroy()
+    this.refs.iScroll.withIScroll(function(iScroll) {
+      iScroll.destroy()
     })
   },
 
@@ -168,7 +168,7 @@ You can pass `true` as first argument for call callback after iscroll is initial
     return(
       <div>
         <a class="#" onClick={this.onSomethingClick}>Do something</a>
-        <ReactIScroll ref="iscroll"
+        <ReactIScroll ref="iScroll"
                       iScroll={iScroll}
                       onRefresh={this.onRefresh}>
           <div>Long content...</div>
@@ -219,8 +219,8 @@ There is example application. You can run it with this commands:
 
 ### Done
 - [x] Make this README.md :)
-- [x] Trigger `onRefresh` event when iscroll is internally refreshed (e.g. on window resize)
-- [x] Do not `require('iscroll')` by itself. Instead pass it in props (there is few different versions of iscroll and you want to pick correct one for you)
+- [x] Trigger `onRefresh` event when iScroll is internally refreshed (e.g. on window resize)
+- [x] Do not `require('iscroll')` by itself. Instead pass it in props (there is few different versions of iScroll and you want to pick correct one for you)
 - [x] Publish to npm
 - [x] Convert source code into Babel
 
