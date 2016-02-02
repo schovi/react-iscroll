@@ -50,9 +50,9 @@ for(var i = 0; i < availableEvents.length; i++) {
 
 export default class ReactIScroll extends React.Component {
 
-  static displayName = 'ReactIScroll'
+  static displayName = 'ReactIScroll';
 
-  static propTypes = propTypes
+  static propTypes = propTypes;
 
   static defaultProps = {
     defer: 0,
@@ -63,7 +63,7 @@ export default class ReactIScroll extends React.Component {
       width: "100%",
       overflow: "hidden"
     }
-  }
+  };
 
   constructor(props) {
     super(props)

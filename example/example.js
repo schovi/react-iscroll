@@ -33,11 +33,11 @@ class Example extends React.Component {
 
   onScrollStart = () => {
     this.setState({isScrolling: true})
-  }
+  };
 
   onScrollEnd = (iScrollInstance) => {
     this.setState({isScrolling: false, y: iScrollInstance.y})
-  }
+  };
 
   addRow = (ev) => {
     ev.preventDefault()
@@ -48,7 +48,7 @@ class Example extends React.Component {
     list.push(newId)
 
     this.setState({list: list, lastId: newId})
-  }
+  };
 
   removeRow = (ev) => {
     ev.preventDefault()
@@ -58,8 +58,7 @@ class Example extends React.Component {
     list.shift()
 
     this.setState({list: list})
-
-  }
+  };
 
   onScrollRefresh = (iScrollInstance) => {
     const hasVerticalScroll = iScrollInstance.hasVerticalScroll
@@ -67,7 +66,7 @@ class Example extends React.Component {
     if(this.state.canVerticallyScroll !== hasVerticalScroll) {
       this.setState({canVerticallyScroll: hasVerticalScroll})
     }
-  }
+  };
 
   render() {
     const listOfLi = [],
