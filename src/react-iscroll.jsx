@@ -96,9 +96,7 @@ export default class ReactIScroll extends React.Component {
     } else {
       this.withIScroll(true, (iScrollInstance) => {
         // Save current state
-        const x     = iScrollInstance.x
-        const y     = iScrollInstance.y
-        const scale = iScrollInstance.scale
+        const {x, y, scale} = iScrollInstance
 
         // Destroy current and Create new instance of iScroll
         this._teardownIScroll()
