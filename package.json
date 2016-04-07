@@ -47,7 +47,7 @@
   },
   "scripts": {
     "compile": "babel -d dist/ src/",
-    "compile-umd": "export BABEL_ENV=umd || set BABEL_ENV=umd && babel -d dist/ src/",
+    "compile-umd": "export BABEL_ENV=umd || set BABEL_ENV=umd && babel -d dist/umd src/",
     "prepublish": "npm run compile",
     "example": "webpack-dev-server --content-base example/ --config example/webpack.config.js --progress --hot --inline"
   }
