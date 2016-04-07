@@ -1,4 +1,9 @@
 {
   "presets": ["es2015", "react"],
-  "plugins": ["transform-class-properties", "syntax-class-properties", "transform-es2015-modules-umd"]
+  "plugins": ["syntax-class-properties", "transform-class-properties", "transform-es2015-modules-umd"],
+  "env": {
+    "umd": {
+       "plugins": ["transform-es2015-modules-umd"]
+    }
+  }
 }
