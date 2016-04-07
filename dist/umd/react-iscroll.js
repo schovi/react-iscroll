@@ -1,16 +1,4 @@
-(function (global, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(['exports', 'react', 'react-dom', 'deep-equal'], factory);
-  } else if (typeof exports !== "undefined") {
-    factory(exports, require('react'), require('react-dom'), require('deep-equal'));
-  } else {
-    var mod = {
-      exports: {}
-    };
-    factory(mod.exports, global.react, global.reactDom, global.deepEqual);
-    global.reactIscroll = mod.exports;
-  }
-})(this, function (exports, _react, _reactDom, _deepEqual) {
+define(['exports', 'react', 'react-dom', 'deep-equal'], function (exports, _react, _reactDom, _deepEqual) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

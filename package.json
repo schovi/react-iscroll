@@ -28,7 +28,7 @@
     "babel-loader": "^6.2.0",
     "babel-plugin-syntax-class-properties": "^6.5.0",
     "babel-plugin-transform-class-properties": "^6.2.2",
-    "babel-plugin-transform-es2015-modules-umd": "^6.6.5",
+    "babel-plugin-transform-es2015-modules-amd": "^6.6.5",
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-react": "^6.1.18",
     "css-loader": "^0.23.0",
@@ -47,7 +47,7 @@
   },
   "scripts": {
     "compile": "babel -d dist/ src/",
-    "compile-umd": "export BABEL_ENV=umd || set BABEL_ENV=umd && babel -d dist/umd src/",
+    "compile-amd": "set BABEL_ENV=umd && babel --plugins transform-es2015-modules-amd -d dist/umd src/",
     "prepublish": "npm run compile",
     "example": "webpack-dev-server --content-base example/ --config example/webpack.config.js --progress --hot --inline"
   }
