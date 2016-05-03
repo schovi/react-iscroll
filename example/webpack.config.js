@@ -2,7 +2,7 @@ module.exports = {
   context: __dirname,
 
   entry:  {
-    example: 'example.js'
+    example: 'example.jsx'
   },
 
   devtool: 'eval-source-map',
