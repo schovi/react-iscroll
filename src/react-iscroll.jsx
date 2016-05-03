@@ -3,19 +3,6 @@ import ReactDOM from 'react-dom';
 import equal from 'deep-equal'
 const { PropTypes } = React
 
-// Events available on iScroll instance
-// [`iScroll event name`, `react component event name`]
-const availableEvents = [
-  ['beforeScrollStart', "onBeforeScrollStart"],
-  ['scrollCancel', "onScrollCancel"],
-  ['scrollStart', "onScrollStart"],
-  ['scroll', "onScroll"],
-  ['scrollEnd', "onScrollEnd"],
-  ['flick', "onFlick"],
-  ['zoomStart', "onZoomStart"],
-  ['zoomEnd', "onZoomEnd"]
-]
-
 const iScrollPropType = (props, propName, componentName) => {
   const iScroll = props[propName]
   const proto   = iScroll && iScroll.prototype
@@ -44,8 +31,17 @@ const propTypes = {
   onRefresh: PropTypes.func
 }
 
-for(var i = 0; i < availableEvents.length; i++) {
-  propTypes[availableEvents[i][1]] = PropTypes.func
+// Events available on iScroll instance
+// {`react component event name`: `iScroll event name`}
+const availableEventNames = {}
+const iScrollEventNames = ['beforeScrollStart', 'scrollCancel', 'scrollStart', 'scroll', 'scrollEnd', 'flick', 'zoomStart', 'zoomEnd']
+
+for(let i = 0, len = iScrollEventNames.length; i < len; i++) {
+  const iScrollEventName = iScrollEventNames[i]
+  const reactEventName = `on${iScrollEventName[0].toUpperCase()}${iScrollEventName.slice(1)}`
+  availableEventNames[reactEventName] = iScrollEventName
+  // Set propTypes validation for event
+  propTypes[reactEventName] = PropTypes.func
 }
 
 export default class ReactIScroll extends React.Component {
@@ -198,11 +194,8 @@ export default class ReactIScroll extends React.Component {
 
   // Iterate through available events and update one by one
   _updateIScrollEvents(prevProps, nextProps) {
-    const len = availableEvents.length;
-
-    for(let i = 0; i < len; i++) {
-      const [iScrollEventName, reactEventName] = availableEvents[i]
-      this._updateIScrollEvent(iScrollEventName, prevProps[reactEventName], nextProps[reactEventName])
+    for(const reactEventName in availableEventNames) {
+      this._updateIScrollEvent(availableEventNames[reactEventName], prevProps[reactEventName], nextProps[reactEventName])
     }
   }
 
