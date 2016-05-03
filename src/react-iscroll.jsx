@@ -161,7 +161,8 @@ export default class ReactIScroll extends React.Component {
     if(defer === false) {
       this._runInitializeIScroll()
     } else {
-      setTimeout(() => this._runInitializeIScroll(), defer)
+      const timeout = defer === true ? 0 : defer
+      setTimeout(() => this._runInitializeIScroll(), timeout)
     }
   }
 
