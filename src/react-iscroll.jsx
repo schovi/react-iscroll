@@ -142,10 +142,10 @@ export default class ReactIScroll extends React.Component {
     this._triggerRefreshEvent()
 
     // Patch iScroll instance .refresh() function to trigger our onRefresh event
-    const origRefresh = iScrollInstance.refresh
+    iScrollInstance.originalRefresh = iScrollInstance.refresh
 
     iScrollInstance.refresh = () => {
-      origRefresh.apply(iScrollInstance)
+      iScrollInstance.originalRefresh.apply(iScrollInstance)
       this._triggerRefreshEvent()
     }
 
