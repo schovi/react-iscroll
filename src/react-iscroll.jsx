@@ -7,17 +7,14 @@ const iScrollPropType = (props, propName, componentName) => {
   const iScroll = props[propName]
   const proto   = iScroll && iScroll.prototype
 
-  if(!iScroll || !proto || !proto.version || !proto.scrollTo) {
+  if(!iScroll || !proto || !proto.version || !proto.scrollTo)
     return new Error(componentName + ": iScroll not passed to component props.")
-  } else {
-    if(!/^5\..*/.test(proto.version)) {
-      console.warn(componentName + ": different version than 5.x.y of iScroll is required. Some features won't work properly.")
-    }
 
-    if(props.options && props.options.zoom && !proto.zoom) {
-      console.warn(componentName + ": options.zoom is set, but iscroll-zoom version is not required. Zoom feature won't work properly.")
-    }
-  }
+  if(+proto.version.split(".")[0] !== 5)
+    console.warn(componentName + ": different version than 5.x.y of iScroll is required. Some features won't work properly.")
+
+  if(props.options && props.options.zoom && !proto.zoom)
+    console.warn(componentName + ": options.zoom is set, but iscroll-zoom version is not required. Zoom feature won't work properly.")
 }
 
 // Generate propTypes with event function validating
