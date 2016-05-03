@@ -178,7 +178,7 @@ export default class ReactIScroll extends React.Component {
   }
 
   _teardownIScroll() {
-    if (this._iScrollInstance) {
+    if(this._iScrollInstance) {
       this._iScrollInstance.destroy()
       this._iScrollInstance = undefined
     }
@@ -223,9 +223,8 @@ export default class ReactIScroll extends React.Component {
   _triggerRefreshEvent() {
     const {onRefresh} = this.props
 
-    if(onRefresh) {
+    if(onRefresh)
       this.withIScroll((iScrollInstance) => onRefresh(iScrollInstance))
-    }
   }
 
   render() {
