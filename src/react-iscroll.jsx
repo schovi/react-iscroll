@@ -48,7 +48,7 @@ export default class ReactIScroll extends React.Component {
   static propTypes = propTypes;
 
   static defaultProps = {
-    defer: 0,
+    defer: true,
     options: {},
     style: {
       position: "relative",
