@@ -1,32 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
 import equal from 'deep-equal'
-const { PropTypes } = React
 
-const iScrollPropType = (props, propName, componentName) => {
-  const iScroll = props[propName]
-  const proto   = iScroll && iScroll.prototype
-
-  if(!iScroll || !proto || !proto.version || !proto.scrollTo)
-    return new Error(componentName + ": iScroll not passed to component props.")
-
-  if(+proto.version.split(".")[0] !== 5)
-    console.warn(componentName + ": different version than 5.x.y of iScroll is required. Some features won't work properly.")
-
-  if(props.options && props.options.zoom && !proto.zoom)
-    console.warn(componentName + ": options.zoom is set, but iscroll-zoom version is not required. Zoom feature won't work properly.")
-}
-
-// Generate propTypes with event function validating
-const propTypes = {
-  defer: React.PropTypes.oneOfType([
-    React.PropTypes.bool,
-    React.PropTypes.number
-  ]),
-  options: PropTypes.object,
-  iScroll: iScrollPropType,
-  onRefresh: PropTypes.func
-}
+const excludePropNames = ['defer', 'iScroll', 'onRefresh', 'options']
 
 // Events available on iScroll instance
 // {`react component event name`: `iScroll event name`}
@@ -37,15 +13,11 @@ for(let i = 0, len = iScrollEventNames.length; i < len; i++) {
   const iScrollEventName = iScrollEventNames[i]
   const reactEventName = `on${iScrollEventName[0].toUpperCase()}${iScrollEventName.slice(1)}`
   availableEventNames[reactEventName] = iScrollEventName
-  // Set propTypes validation for event
-  propTypes[reactEventName] = PropTypes.func
+  excludePropNames.push(reactEventName)
 }
 
 export default class ReactIScroll extends React.Component {
-
   static displayName = 'ReactIScroll';
-
-  static propTypes = propTypes;
 
   static defaultProps = {
     defer: true,
@@ -181,6 +153,7 @@ export default class ReactIScroll extends React.Component {
     if(this._iScrollInstance) {
       this._iScrollInstance.destroy()
       this._iScrollInstance = undefined
+      this._iScrollBindedEvents = {}
     }
   }
 
@@ -228,15 +201,20 @@ export default class ReactIScroll extends React.Component {
   }
 
   render() {
-    // Keep only html properties
-    const htmlProps = {}
+    // Keep only non ReactIScroll properties
+    const props = {}
 
     for(const prop in this.props) {
-      if(!propTypes[prop]) {
-        htmlProps[prop] = this.props[prop]
+      if(!~excludePropNames.indexOf(prop)) {
+        props[prop] = this.props[prop]
       }
     }
 
-    return <div {...htmlProps} />
+    return <div {...props} />
   }
+}
+
+if(process.env.NODE_ENV != "production") {
+  const propTypesMaker = require('./prop_types').default
+  ReactIScroll.propTypes = propTypesMaker(availableEventNames)
 }
