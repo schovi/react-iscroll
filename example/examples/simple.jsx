@@ -1,9 +1,7 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import iScroll from 'iscroll'
 
-import './example.css'
-import ReactIScroll from '../src/react-iscroll'
+import iScroll from 'iscroll'
+import ReactIScroll from '../../src/react-iscroll'
 
 const iScrollOptions = {
   mouseWheel: true,
@@ -11,7 +9,7 @@ const iScrollOptions = {
   scrollX: true
 }
 
-class Example extends React.Component {
+export default class Simple extends React.Component {
 
   constructor(props) {
     super(props)
@@ -105,5 +103,3 @@ class Example extends React.Component {
     )
   }
 }
-
-ReactDOM.render(<Example />, document.getElementById("example"))
