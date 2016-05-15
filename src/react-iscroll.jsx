@@ -36,12 +36,20 @@ export default class ReactIScroll extends React.Component {
       width: "100%",
       overflow: "hidden"
     }
-  };
+  }
+
+  static childContextTypes = {
+    iScroll: React.PropTypes.object
+  }
 
   constructor(props) {
     super(props)
     this._queuedCallbacks = []
     this._iScrollBindedEvents = {}
+  }
+
+  getChildContext() {
+    return { iScroll: this }
   }
 
   componentDidMount() {
