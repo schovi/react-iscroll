@@ -160,18 +160,18 @@ You can pass `true` as first argument for call callback after iScroll is initial
   onSomethingClick: function(ev) {
     ev.preventDefault()
     this.refs.iScroll.withIScroll(function(iScroll) {
-      iScroll.destroy()
+      iScroll.scrollTop(0,0)
     })
   },
 
   render: function() {
     return(
       <div>
-        <a class="#" onClick={this.onSomethingClick}>Do something</a>
         <ReactIScroll ref="iScroll"
                       iScroll={iScroll}
                       onRefresh={this.onRefresh}>
           <div>Long content...</div>
+          <a class="#" onClick={this.onSomethingClick}>Back to top</a>
         </ReactIScroll>
       </div>
     )
