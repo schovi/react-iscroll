@@ -20,7 +20,7 @@ React component for wrapping iScroll library.
 
 Works on mobile and desktop, supports zooming, pagging, parallax scrolling, carousels and is incredibly small (4kb compress gzipped).
 
-### Why React compoment?
+### Why React component?
 
 React components are great way how to compose your application. And they are great how to handle third party libraries. You can wrap complex logic around library and expose simple API, which are react users used to.
 
