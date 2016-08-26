@@ -178,7 +178,7 @@ You can pass `true` as first argument for call callback after iScroll is initial
   }
 ```
 
-## Horizonzal scroll
+## Horizontal scroll
 
 Common usecase of horizontal scrolling
 
@@ -225,6 +225,6 @@ There is example application. You can run it with this commands:
 - [x] Convert source code into Babel
 
 
-## Licence
+## License
 
 React iScroll is released under the [MIT License](http://www.opensource.org/licenses/MIT).
