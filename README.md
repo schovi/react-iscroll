@@ -22,7 +22,7 @@ Works on mobile and desktop, supports zooming, pagging, parallax scrolling, caro
 
 ### Why React component?
 
-React components are great way how to compose your application. And they are great how to handle third party libraries. You can wrap complex logic around library and expose simple API, which are react users used to.
+React components are a great way to compose your application. And they are a great way to handle third party libraries. You can wrap complex logic around a library and expose a simple API, which react users are used to.
 
 ## Install
 
