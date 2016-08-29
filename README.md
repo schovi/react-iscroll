@@ -20,9 +20,9 @@ React component for wrapping iScroll library.
 
 Works on mobile and desktop, supports zooming, pagging, parallax scrolling, carousels and is incredibly small (4kb compress gzipped).
 
-### Why React compoment?
+### Why React component?
 
-React components are great way how to compose your application. And they are great how to handle third party libraries. You can wrap complex logic around library and expose simple API, which are react users used to.
+React components are a great way to compose your application. And they are a great way to handle third party libraries. You can wrap complex logic around a library and expose a simple API, which react users are used to.
 
 ## Install
 
@@ -178,7 +178,7 @@ You can pass `true` as first argument for call callback after iScroll is initial
   }
 ```
 
-## Horizonzal scroll
+## Horizontal scroll
 
 Common usecase of horizontal scrolling
 
@@ -225,6 +225,6 @@ There is example application. You can run it with this commands:
 - [x] Convert source code into Babel
 
 
-## Licence
+## License
 
 React iScroll is released under the [MIT License](http://www.opensource.org/licenses/MIT).
