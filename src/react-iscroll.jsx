@@ -1,61 +1,26 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
 import equal from 'deep-equal'
-const { PropTypes } = React
+
+const excludePropNames = ['defer', 'iScroll', 'onRefresh', 'options']
 
 // Events available on iScroll instance
-// [`iScroll event name`, `react component event name`]
-const availableEvents = [
-  ['beforeScrollStart', "onBeforeScrollStart"],
-  ['scrollCancel', "onScrollCancel"],
-  ['scrollStart', "onScrollStart"],
-  ['scroll', "onScroll"],
-  ['scrollEnd', "onScrollEnd"],
-  ['flick', "onFlick"],
-  ['zoomStart', "onZoomStart"],
-  ['zoomEnd', "onZoomEnd"]
-]
+// {`react component event name`: `iScroll event name`}
+const availableEventNames = {}
+const iScrollEventNames = ['beforeScrollStart', 'scrollCancel', 'scrollStart', 'scroll', 'scrollEnd', 'flick', 'zoomStart', 'zoomEnd']
 
-const iScrollPropType = (props, propName, componentName) => {
-  const iScroll = props[propName]
-  const proto   = iScroll && iScroll.prototype
-
-  if(!iScroll || !proto || !proto.version || !proto.scrollTo) {
-    return new Error(componentName + ": iScroll not passed to component props.")
-  } else {
-    if(!/^5\..*/.test(proto.version)) {
-      console.warn(componentName + ": different version than 5.x.y of iScroll is required. Some features won't work properly.")
-    }
-
-    if(props.options && props.options.zoom && !proto.zoom) {
-      console.warn(componentName + ": options.zoom is set, but iscroll-zoom version is not required. Zoom feature won't work properly.")
-    }
-  }
-}
-
-// Generate propTypes with event function validating
-const propTypes = {
-  defer: React.PropTypes.oneOfType([
-    React.PropTypes.bool,
-    React.PropTypes.number
-  ]),
-  options: PropTypes.object,
-  iScroll: iScrollPropType,
-  onRefresh: PropTypes.func
-}
-
-for(var i = 0; i < availableEvents.length; i++) {
-  propTypes[availableEvents[i][1]] = PropTypes.func
+for(let i = 0, len = iScrollEventNames.length; i < len; i++) {
+  const iScrollEventName = iScrollEventNames[i]
+  const reactEventName = `on${iScrollEventName[0].toUpperCase()}${iScrollEventName.slice(1)}`
+  availableEventNames[reactEventName] = iScrollEventName
+  excludePropNames.push(reactEventName)
 }
 
 export default class ReactIScroll extends React.Component {
-
   static displayName = 'ReactIScroll';
 
-  static propTypes = propTypes;
-
   static defaultProps = {
-    defer: 0,
+    defer: true,
     options: {},
     style: {
       position: "relative",
@@ -149,10 +114,10 @@ export default class ReactIScroll extends React.Component {
     this._triggerRefreshEvent()
 
     // Patch iScroll instance .refresh() function to trigger our onRefresh event
-    const origRefresh = iScrollInstance.refresh
+    iScrollInstance.originalRefresh = iScrollInstance.refresh
 
     iScrollInstance.refresh = () => {
-      origRefresh.apply(iScrollInstance)
+      iScrollInstance.originalRefresh.apply(iScrollInstance)
       this._triggerRefreshEvent()
     }
 
@@ -168,7 +133,8 @@ export default class ReactIScroll extends React.Component {
     if(defer === false) {
       this._runInitializeIScroll()
     } else {
-      setTimeout(() => this._runInitializeIScroll(), defer)
+      const timeout = defer === true ? 0 : defer
+      setTimeout(() => this._runInitializeIScroll(), timeout)
     }
   }
 
@@ -184,9 +150,10 @@ export default class ReactIScroll extends React.Component {
   }
 
   _teardownIScroll() {
-    if (this._iScrollInstance) {
+    if(this._iScrollInstance) {
       this._iScrollInstance.destroy()
       this._iScrollInstance = undefined
+      this._iScrollBindedEvents = {}
     }
   }
 
@@ -198,11 +165,8 @@ export default class ReactIScroll extends React.Component {
 
   // Iterate through available events and update one by one
   _updateIScrollEvents(prevProps, nextProps) {
-    const len = availableEvents.length;
-
-    for(let i = 0; i < len; i++) {
-      const [iScrollEventName, reactEventName] = availableEvents[i]
-      this._updateIScrollEvent(iScrollEventName, prevProps[reactEventName], nextProps[reactEventName])
+    for(const reactEventName in availableEventNames) {
+      this._updateIScrollEvent(availableEventNames[reactEventName], prevProps[reactEventName], nextProps[reactEventName])
     }
   }
 
@@ -232,21 +196,25 @@ export default class ReactIScroll extends React.Component {
   _triggerRefreshEvent() {
     const {onRefresh} = this.props
 
-    if(onRefresh) {
+    if(onRefresh)
       this.withIScroll((iScrollInstance) => onRefresh(iScrollInstance))
-    }
   }
 
   render() {
-    // Keep only html properties
-    const htmlProps = {}
+    // Keep only non ReactIScroll properties
+    const props = {}
 
     for(const prop in this.props) {
-      if(!propTypes[prop]) {
-        htmlProps[prop] = this.props[prop]
+      if(!~excludePropNames.indexOf(prop)) {
+        props[prop] = this.props[prop]
       }
     }
 
-    return <div {...htmlProps} />
+    return <div {...props} />
   }
+}
+
+if(process.env.NODE_ENV != "production") {
+  const propTypesMaker = require('./prop_types').default
+  ReactIScroll.propTypes = propTypesMaker(availableEventNames)
 }
