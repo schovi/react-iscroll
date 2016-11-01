@@ -77,7 +77,10 @@ const iScrollOptionsPropType = shape({
   scrollY: bool,
   startX: number,
   startY: number,
-  tap: bool,
+  tap: oneOfType([
+    bool,
+    string
+  ]),
 
   // Scrollbars
   scrollbars: oneOf([true, false, 'custom']),
