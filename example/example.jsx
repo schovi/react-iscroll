@@ -5,12 +5,6 @@ import iScroll from 'iscroll'
 import './example.css'
 import ReactIScroll from '../src/react-iscroll'
 
-const iScrollOptions = {
-  mouseWheel: true,
-  scrollbars: true,
-  scrollX: true
-}
-
 class Example extends React.Component {
 
   constructor(props) {
@@ -27,40 +21,17 @@ class Example extends React.Component {
       y: 0,
       isScrolling: false,
       list: list,
-      lastId: len
+      lastId: len,
+      iScrollOptions: {
+        mouseWheel: true,
+        scrollbars: true,
+        scrollX: true,
+        scrollY: true
+      }
     }
   }
 
-  onScrollStart = () => {
-    this.setState({isScrolling: true})
-  };
-
-  onScrollEnd = (iScrollInstance) => {
-    this.setState({isScrolling: false, y: iScrollInstance.y})
-  };
-
-  addRow = (ev) => {
-    ev.preventDefault()
-
-    const list  = this.state.list,
-          newId = this.state.lastId + 1;
-
-    list.push(newId)
-
-    this.setState({list: list, lastId: newId})
-  };
-
-  removeRow = (ev) => {
-    ev.preventDefault()
-
-    const list = this.state.list;
-
-    list.shift()
-
-    this.setState({list: list})
-  };
-
-  onScrollRefresh = (iScrollInstance) => {
+  _handleScrollRefresh = (iScrollInstance) => {
     const hasVerticalScroll = iScrollInstance.hasVerticalScroll
 
     if(this.state.canVerticallyScroll !== hasVerticalScroll) {
@@ -68,27 +39,79 @@ class Example extends React.Component {
     }
   };
 
+  _handleScrollStart = () => {
+    this.setState({isScrolling: true})
+  };
+
+  _handleScrollEnd = (iScrollInstance) => {
+    this.setState({isScrolling: false, y: iScrollInstance.y})
+  };
+
+  _handleAddRow = (ev) => {
+    ev.preventDefault()
+
+    this.setState(({ lastId, list }) => {
+      const newId = lastId + 1;
+
+      list.push(newId)
+
+      return {
+        lastId: newId,
+        list: list
+      }
+    })
+  };
+
+  _handleRemoveRow = (ev) => {
+    ev.preventDefault()
+
+    this.setState(({ list }) => {
+      list.shift()
+      return { list: list }
+    })
+  };
+
+  _handleToggleScroll = (ev) => {
+    ev.preventDefault()
+
+    this.setState(({ iScrollOptions, iScrollOptions : { scrollX, scrollY} }) => {
+      return {
+        iScrollOptions: Object.assign({}, iScrollOptions, {
+          scrollX: !scrollX,
+          scrollY: !scrollY
+        })
+      }
+    })
+  }
+
   render() {
-    const listOfLi = [],
-          len = this.state.list.length;
+    const { canVerticallyScroll, list, iScrollOptions, isScrolling } = this.state;
+    const listOfLi = [];
+    const len = list.length;
+
     let i = 0;
 
     for(i; i < len; i++) {
-      listOfLi.push(<li key={i}>Pretty row {this.state.list[i]}<span className="beyond">I'm beyond</span></li>)
+      listOfLi.push(<li key={i}>Pretty row {list[i]}<span className="beyond">I'm beyond</span></li>)
     }
 
     return (
       <div>
         <div id="header">
-          <button onClick={this.removeRow} className="button">Remove first row</button>
+          <div className="buttons">
+            <button onClick={this._handleRemoveRow}>Remove first row</button>
+            <button onClick={this._handleToggleScroll}>
+              { iScrollOptions.scrollX ? "Disable scroll" : "Enable scroll" }
+            </button>
+          </div>
           React iScroll component example
         </div>
         <div id="wrapper">
           <ReactIScroll iScroll={iScroll}
                         options={iScrollOptions}
-                        onRefresh={this.onScrollRefresh}
-                        onScrollStart={this.onScrollStart}
-                        onScrollEnd={this.onScrollEnd}>
+                        onRefresh={this._handleScrollRefresh}
+                        onScrollStart={this._handleScrollStart}
+                        onScrollEnd={this._handleScrollEnd}>
             <div style={{width: "110%"}}>
               <ul>
                 {listOfLi}
@@ -97,9 +120,11 @@ class Example extends React.Component {
           </ReactIScroll>
         </div>
         <div id="footer">
-          <button onClick={this.addRow} className="button">Add one row</button>
-          status: {this.state.isScrolling ? 'Scrolling' : 'Standby' } |
-          can vertically scroll: {this.state.canVerticallyScroll ? 'Yes' : 'No'}
+          <div className="buttons">
+            <button onClick={this._handleAddRow} className="button">Add one row</button>
+          </div>
+          status: {isScrolling ? 'Scrolling' : 'Standby' } |
+          can vertically scroll: {canVerticallyScroll ? 'Yes' : 'No'}
         </div>
       </div>
     )

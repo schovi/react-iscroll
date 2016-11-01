@@ -105,10 +105,9 @@ li {
   float: right;
 }
 
-.button {
+.buttons {
   position:absolute;
   z-index:3;
   left:10px;
-  top:10px;
   font-size: 16px;
 }
