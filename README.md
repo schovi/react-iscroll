@@ -76,7 +76,7 @@ var ExampleApp = React.createClass({
 
 ### onScroll event does not works
 
-You have to use **probe** version of iScroll. Check [iScroll documentation](http://iscrolljs.com/) for more information.
+You have to use **probe** version of iScroll and add `probeType` to `<ReactIScroll options={{probeType:2}}>`. Check [iScroll documentation](http://iscrolljs.com/) for more information.
 
 
 ## Configuration (API)
