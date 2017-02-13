@@ -167,7 +167,7 @@ You can pass `true` as first argument for call callback after iScroll is initial
   onSomethingClick: function(ev) {
     ev.preventDefault()
     this.refs.iScroll.withIScroll(function(iScroll) {
-      iScroll.scrollTop(0,0)
+      iScroll.scrollTo(0,0)
     })
   },
 
