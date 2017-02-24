@@ -32,15 +32,18 @@ export default class ReactIScroll extends React.Component {
 
   constructor(props) {
     super(props)
+    this._isMounted = false
     this._queuedCallbacks = []
     this._iScrollBindedEvents = {}
   }
 
   componentDidMount() {
+    this._isMounted = true
     this._initializeIScroll()
   }
 
   componentWillUnmount() {
+    this._isMounted = false
     this._teardownIScroll()
   }
 
@@ -104,6 +107,9 @@ export default class ReactIScroll extends React.Component {
   }
 
   _runInitializeIScroll() {
+    if (this._isMounted === false) {
+      return
+    }
     const {iScroll, options} = this.props
 
     // Create iScroll instance with given options
