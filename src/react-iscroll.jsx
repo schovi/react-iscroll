@@ -41,6 +41,7 @@ export default class ReactIScroll extends React.Component {
   }
 
   componentWillUnmount() {
+    clearTimeout(this.timeout)
     this._teardownIScroll()
   }
 
@@ -134,7 +135,7 @@ export default class ReactIScroll extends React.Component {
       this._runInitializeIScroll()
     } else {
       const timeout = defer === true ? 0 : defer
-      setTimeout(() => this._runInitializeIScroll(), timeout)
+      this.timeout = setTimeout(() => this._runInitializeIScroll(), timeout)
     }
   }
 
