@@ -33,6 +33,7 @@ export default class ReactIScroll extends React.Component {
   constructor(props) {
     super(props)
     this._isMounted = false
+    this._initializeTimeout = null
     this._queuedCallbacks = []
     this._iScrollBindedEvents = {}
   }
@@ -97,7 +98,7 @@ export default class ReactIScroll extends React.Component {
 
     if(this.getIScroll()) {
       callback(this.getIScroll())
-    } else if (waitForInit === true) {
+    } else if(waitForInit === true) {
       this._queuedCallbacks.push(callback)
     }
   }
@@ -107,9 +108,6 @@ export default class ReactIScroll extends React.Component {
   }
 
   _runInitializeIScroll() {
-    if (this._isMounted === false) {
-      return
-    }
     const {iScroll, options} = this.props
 
     // Create iScroll instance with given options
@@ -134,13 +132,17 @@ export default class ReactIScroll extends React.Component {
   }
 
   _initializeIScroll() {
+    if(this._isMounted === false) {
+      return
+    }
+
     const {defer} = this.props
 
     if(defer === false) {
       this._runInitializeIScroll()
     } else {
       const timeout = defer === true ? 0 : defer
-      setTimeout(() => this._runInitializeIScroll(), timeout)
+      this._initializeTimeout = setTimeout(() => this._runInitializeIScroll(), timeout)
     }
   }
 
@@ -156,6 +158,11 @@ export default class ReactIScroll extends React.Component {
   }
 
   _teardownIScroll() {
+    if(this._initializeTimeout !== null) {
+      clearTimeout(this._initializeTimeout)
+      this._initializeTimeout = null
+    }
+
     if(this._iScrollInstance) {
       this._iScrollInstance.destroy()
       this._iScrollInstance = undefined
