@@ -49,8 +49,8 @@ export default class ReactIScroll extends React.Component {
   }
 
   // There is no state, we can compare only props.
-  shouldComponentUpdate(nextProps) {
-    return !equal(this.props, nextProps)
+  shouldComponentUpdate(nextProps, nextContext) {
+    return !equal(this.props, nextProps) || !equal(this.context, nextContext)
   }
 
   // Check if iScroll options has changed and recreate instance with new one
@@ -108,6 +108,9 @@ export default class ReactIScroll extends React.Component {
   }
 
   _runInitializeIScroll() {
+    if (this._isMounted === false) {
+      return
+    }
     const {iScroll, options} = this.props
 
     // Create iScroll instance with given options
