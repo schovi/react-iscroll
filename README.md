@@ -217,7 +217,7 @@ To override the native scrolling iScroll has to inhibit some default browser beh
 ```js
 constructor(props) {
     super(props);
-    this.refDict = {};
+    this.refDict = [];
 }
 
 componentDidMount() {
@@ -230,7 +230,11 @@ handleTap(e) {
 
 render(){
     return(
-        <ReactIScroll iScroll={iScroll}>
+        <ReactIScroll iScroll={iScroll}
+              options={{
+                tap: true
+              }}
+              >
             <div>
                 <div id={0} ref={el => this.refDict[0] = el}>
                 Click me in react-iscroll
