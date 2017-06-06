@@ -108,7 +108,7 @@ const iScrollOptionsPropType = shape({
   shrinkScrollbars: shrinkPropType,
 
   // Indicators
-  indicators: oneOfType([indicatorPropType, PropTypes.arrayOf(indicatorPropType)]),
+  indicators: oneOfType([indicatorPropType, arrayOf(indicatorPropType)]),
 
   // Snap
   snap: oneOfType([string, bool]),
