@@ -2,6 +2,10 @@
 
 React component for wrapping iScroll library.
 
+## ! Version 2.0 is only for React >= 15.5
+
+- If you depends on older react < 15.5, use react-iscroll@1.x.y
+
 ## ! Breaking changes in version 1.0.0
 
 - Property for passing iScroll instance is renamed from `iscroll` to `iScroll` and naming is unified across whole package
