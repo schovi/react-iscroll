@@ -196,12 +196,12 @@ export default class ReactIScroll extends React.Component {
       const currentEvents = this._iScrollBindedEvents
 
       this.withIScroll(true, function(iScrollInstance) {
-        if (prevPropEvent !== undefined) {
+        if (typeof prevPropEvent === 'function') {
           iScrollInstance.off(iScrollEventName, currentEvents[iScrollEventName])
           currentEvents[iScrollEventName] = undefined
         }
 
-        if (currentPropEvent !== undefined) {
+        if (typeof currentPropEvent === 'function') {
           const wrappedCallback = function(...args) {
             currentPropEvent(iScrollInstance, ...args)
           }
