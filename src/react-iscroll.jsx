@@ -109,22 +109,21 @@ export default class ReactIScroll extends React.Component {
     this.withIScroll(iScrollInstance => iScrollInstance.refresh())
   }
 
-  _runInitializeIScroll() {
+  _performInitializeIScroll() {
     const { iScroll, options } = this.props
 
     // Create iScroll instance with given options
     const iScrollInstance = new iScroll(ReactDOM.findDOMNode(this), options)
     this._iScrollInstance = iScrollInstance
 
-    // TODO there should be new event 'onInitialize'
-    this._triggerRefreshEvent()
+    this._triggerInitializeEvent(iScrollInstance)
 
     // Patch iScroll instance .refresh() function to trigger our onRefresh event
     iScrollInstance.originalRefresh = iScrollInstance.refresh
 
     iScrollInstance.refresh = () => {
       iScrollInstance.originalRefresh.apply(iScrollInstance)
-      this._triggerRefreshEvent()
+      this._triggerRefreshEvent(iScrollInstance)
     }
 
     // Bind iScroll events
@@ -141,10 +140,10 @@ export default class ReactIScroll extends React.Component {
     const { defer } = this.props
 
     if (defer === false) {
-      this._runInitializeIScroll()
+      this._performInitializeIScroll()
     } else {
       const timeout = defer === true ? 0 : defer
-      this._initializeTimeout = setTimeout(() => this._runInitializeIScroll(), timeout)
+      this._initializeTimeout = setTimeout(() => this._performInitializeIScroll(), timeout)
     }
   }
 
@@ -163,6 +162,7 @@ export default class ReactIScroll extends React.Component {
 
     if (this._iScrollInstance) {
       this._iScrollInstance.destroy()
+      this._triggerDestroyEvent(this._iScrollInstance)
       this._iScrollInstance = undefined
     }
 
@@ -213,11 +213,27 @@ export default class ReactIScroll extends React.Component {
     }
   }
 
-  _triggerRefreshEvent() {
-    const { onRefresh } = this.props
+  _triggerInitializeEvent(iScrollInstance) {
+    const onInitialize = this.props.onInitialize
+
+    if (typeof onInitialize === 'function') {
+      onInitialize(iScrollInstance)
+    }
+  }
+
+  _triggerRefreshEvent(iScrollInstance) {
+    const onRefresh = this.props.onRefresh
 
     if (typeof onRefresh === 'function') {
-      this.withIScroll(iScrollInstance => onRefresh(iScrollInstance))
+      onRefresh(iScrollInstance)
+    }
+  }
+
+  _triggerDestroyEvent(iScrollInstance) {
+    const onDestroy = this.props.onDestroy
+
+    if (typeof onDestroy === 'function') {
+      onDestroy(iScrollInstance)
     }
   }
 

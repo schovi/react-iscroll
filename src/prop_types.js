@@ -146,6 +146,8 @@ const iScrollOptionsPropType = shape({
 const reactIScrollPropTypes = {
   defer: oneOfType([bool, number]),
   iScroll: iScrollPropType,
+  onInitialize: func,
+  onDestroy: func,
   onRefresh: func,
   options: iScrollOptionsPropType
 }
