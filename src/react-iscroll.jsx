@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import deepEqual from 'deep-equal'
 
 const excludePropNames = ['defer', 'iScroll', 'onRefresh', 'options']
@@ -33,6 +32,7 @@ export default class ReactIScroll extends React.Component {
   constructor(props) {
     super(props)
 
+    this._node = null
     this._isMounted = false
     this._initializeTimeout = null
     this._queuedCallbacks = []
@@ -113,7 +113,7 @@ export default class ReactIScroll extends React.Component {
     const { iScroll, options } = this.props
 
     // Create iScroll instance with given options
-    const iScrollInstance = new iScroll(ReactDOM.findDOMNode(this), options)
+    const iScrollInstance = new iScroll(this._node, options)
     this._iScrollInstance = iScrollInstance
 
     this._triggerInitializeEvent(iScrollInstance)
@@ -247,7 +247,7 @@ export default class ReactIScroll extends React.Component {
       }
     }
 
-    return <div {...props} />
+    return <div ref={node => this._node = node} {...props} />
   }
 }
 
