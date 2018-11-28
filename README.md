@@ -214,6 +214,41 @@ var HorizontalScroll = React.createClass({
 })
 ```
 
+## Tap / Click Elements inside IScroll
+
+To override the native scrolling iScroll has to inhibit some default browser behaviors, such as mouse clicks. See [iScroll manual](http://iscrolljs.com/) options.click and options.tap. The following is an example of including a clickable element.
+
+```js
+constructor(props) {
+    super(props);
+    this.refDict = [];
+}
+
+componentDidMount() {
+    this.refDict[0].addEventListener("tap", () => this.handleTap(this.refDict[0]));
+}
+
+handleTap(e) {
+    console.log(e.id);
+}
+
+render(){
+    return(
+        <ReactIScroll iScroll={iScroll}
+              options={{
+                tap: true
+              }}
+              >
+            <div>
+                <div id={0} ref={el => this.refDict[0] = el}>
+                Click me in react-iscroll
+                </div>
+            </div>
+        </ReactIScroll>
+    )
+}
+```
+
 ## Example
 
 There is example application. You can run it with this commands:
